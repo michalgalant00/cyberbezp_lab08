@@ -20,7 +20,6 @@ if (isset($_SESSION['session_expire'])) {
         include_once "classes/Page.php";
         include_once "classes/Db.php";
         include_once "classes/Filter.php";
-        //require './htmlpurifier-4.14.0/library/HTMLPurifier.auto.php';
         Page::display_header("Messages");
 
         // Create a new Db object
@@ -36,17 +35,6 @@ if (isset($_SESSION['session_expire'])) {
             $content = $purifier->purify($_REQUEST['content']);
             if (!$db->addMessage($name, $type, $content, $_SESSION['login']))
                 echo "Adding new message failed";
-
-
-            // $stmt = $db->pdo->prepare("INSERT INTO message (name, type, message, deleted) VALUES (:name, :type, :content, 0)");
-            // $t = Filter::sanitizeData($name, 'str');
-            // $tt = Filter::sanitizeData($type, 'str');
-            // $ttt = Filter::sanitizeData($content, 'str');
-            // $stmt->bindParam(':name', $t);
-            // $stmt->bindParam(':type', $tt);
-            // $stmt->bindParam(':content', $ttt);
-            // if (!$stmt->execute())
-            //     echo "Adding new message failed";
         }
         ?>
 <!---------------------------------------------------------------------->
