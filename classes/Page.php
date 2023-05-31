@@ -15,13 +15,14 @@ class Page
         </head>
 
         <body>
-            <?php
+        <?php
     }
     static function display_navigation()
     { ?>
             <a href="index.php">index</a><br>
             <a href="messages.php">messages</a><br>
             <a href="message_add.php">add new message</a><br>
+            <a href="my_messages.php">my messages</a><br>
 
             <?php if (!empty($_SESSION['permissions'][1])) : ?>
                 <a href="permissions_list.php">permissions list</a><br>
@@ -32,7 +33,7 @@ class Page
                 <a href="remove_user_role.php">remove user role</a><br>
                 <a href="users.php">users list</a><br>
             <?php endif; ?>
-           
-            <?php
+
+    <?php
     }
 }

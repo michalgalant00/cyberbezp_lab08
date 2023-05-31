@@ -52,16 +52,16 @@ if (isset($_SESSION['session_expire'])) {
         }
     }
 
-    // if (empty($_SESSION['roles'][1])) {
-    //     if ($where_clause) {
-    //         $where_clause .= " AND user_id = (SELECT id FROM user WHERE login = :login LIMIT 1) ";
-    //     } else {
-    //         $where_clause .= " WHERE user_id = (SELECT id FROM user WHERE login = :login LIMIT 1) ";
-    //     }
-    // }
+    if (empty($_SESSION['roles'][1])) {
+        if ($where_clause) {
+            $where_clause .= " AND user_id = (SELECT id FROM user WHERE login = :login LIMIT 1) ";
+        } else {
+            $where_clause .= " WHERE user_id = (SELECT id FROM user WHERE login = :login LIMIT 1) ";
+        }
+    }
 
 
-    $sql = "SELECT * from message";
+    $sql = "SELECT * from message" . $where_clause; //biala_lista
     $stmt = $db->pdo->prepare($sql);
     if (isset($_REQUEST['filter_messages'])) {
         $string = "%" . $_REQUEST['string'] . "%";
@@ -74,11 +74,11 @@ if (isset($_SESSION['session_expire'])) {
         }
     }
 
-    // if (empty($_SESSION['roles'][1])) {
-    //     $user_login = Filter::sanitizeData($_SESSION['login'], 'str');
+    if (empty($_SESSION['roles'][1])) {
+        $user_login = Filter::sanitizeData($_SESSION['login'], 'str');
 
-    //     $stmt->bindParam(':login', $user_login);
-    // }
+        $stmt->bindParam(':login', $user_login);
+    }
 
 
     $stmt->execute();
@@ -113,7 +113,7 @@ if (isset($_SESSION['session_expire'])) {
 </form>
 
 <!--------------------------------------------------------------------->
-<!-- 
+
 <hr>
 <P>Messages editing</P>
 <form method="post" action="message_edit.php">
@@ -131,7 +131,7 @@ if (isset($_SESSION['session_expire'])) {
         </tr>
     </table>
     <input type="submit" id="submit" value="Edit message" name="edit_message">
-</form> -->
+</form>
 <!--------------------------------------------------------------------->
 
 <?php if (!empty($_SESSION['permissions'][10])) : ?>
